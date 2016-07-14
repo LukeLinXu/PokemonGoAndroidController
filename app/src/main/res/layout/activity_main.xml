@@ -4,63 +4,116 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/speed_control_walk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="walk"/>
+
+        <Button
+            android:id="@+id/speed_control_drive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="drive"/>
+
+    </LinearLayout>
+
     <TextView
         android:id="@+id/ipaddr"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="40dp"
         />
-    />
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
 
-        <TextView
+        <Button
+            android:id="@+id/northwest"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:text="NW"
+            />
+
+        <Button
+            android:id="@+id/north"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:text="N"
+            />
+
+        <Button
+            android:id="@+id/northeast"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:text="NE"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/west"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:text="N"
+            />
+
+        <Button
             android:id="@+id/location"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_centerInParent="true"
-            android:text="location"
-            android:gravity="center"/>
-
-        <Button
-            android:id="@+id/up"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:text="North"
-            android:layout_above="@id/location"
-            android:layout_centerHorizontal="true"
-
             />
 
         <Button
-            android:id="@+id/down"
+            android:id="@+id/east"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:text="South"
-            android:layout_below="@id/location"
-            android:layout_centerHorizontal="true"
+            android:text="E"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/southwest"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:text="SW"
             />
 
         <Button
-            android:id="@+id/left"
+            android:id="@+id/south"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:text="West"
-            android:layout_toLeftOf="@id/location"
-            android:layout_centerVertical="true"
+            android:text="S"
             />
 
         <Button
-            android:id="@+id/right"
+            android:id="@+id/southeast"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:text="East"
-            android:layout_toRightOf="@id/location"
-            android:layout_centerVertical="true"
+            android:text="SE"
             />
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>

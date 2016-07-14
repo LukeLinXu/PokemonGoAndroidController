@@ -2,9 +2,11 @@ package com.example.llin.pokemongocontrollernomap;
 
 import android.location.Location;
 import android.net.wifi.WifiManager;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -23,13 +25,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final int PORT = 8765;
     private MyHTTPD server;
     private TextView location;
-    private Button up;
-    private Button down;
-    private Button left;
-    private Button right;
+    private Button northeast;
+    private Button northwest;
+    private Button southeast;
+    private Button southwest;
+    private Button north;
+    private Button west;
+    private Button south;
+    private Button east;
+    private Button walk;
+    private Button drive;
     private double lng;
     private double lat;
-    private static final double step = 0.00001;
+    private double lngtime = 0;
+    private double lattime = 0;
+    private double step = step_walk;
+    private static final double step_walk = 0.1/60/60;
+    private static final double step_drive = step_walk*8;
+    private CountDownTimer countDownTimer;
+
     private SharedPrefPersistence sharedPrefPersistence;
 
     @Override
@@ -37,14 +51,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         location = (TextView) findViewById(R.id.location);
-        up = (Button) findViewById(R.id.up);
-        down = (Button) findViewById(R.id.down);
-        left = (Button) findViewById(R.id.left);
-        right = (Button) findViewById(R.id.right);
-        up.setOnClickListener(this);
-        down.setOnClickListener(this);
-        right.setOnClickListener(this);
-        left.setOnClickListener(this);
+        northeast = (Button) findViewById(R.id.northeast);
+        northwest = (Button) findViewById(R.id.northwest);
+        southeast = (Button) findViewById(R.id.southeast);
+        southwest = (Button) findViewById(R.id.southwest);
+        north = (Button) findViewById(R.id.north);
+        west = (Button) findViewById(R.id.west);
+        east = (Button) findViewById(R.id.east);
+        south = (Button) findViewById(R.id.south);
+        walk = (Button) findViewById(R.id.speed_control_walk);
+        drive = (Button) findViewById(R.id.speed_control_drive);
+
+        location.setOnClickListener(this);
+        north.setOnClickListener(this);
+        northeast.setOnClickListener(this);
+        northwest.setOnClickListener(this);
+        south.setOnClickListener(this);
+        southeast.setOnClickListener(this);
+        southwest.setOnClickListener(this);
+        east.setOnClickListener(this);
+        west.setOnClickListener(this);
+        drive.setOnClickListener(this);
+        walk.setOnClickListener(this);
     }
 
     @Override
@@ -71,11 +99,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        countDownTimer = new CountDownTimer(1000*60*60*24, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                lat += step * lattime;
+                lng += step * lngtime;
+                Log.d("location:", "onTick: "+lat+","+lng);
+            }
+
+            @Override
+            public void onFinish() {
+                finish();
+            }
+        };
+        countDownTimer.start();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        countDownTimer.cancel();
         sharedPrefPersistence.save("lng", String.valueOf(lng));
         sharedPrefPersistence.save("lat", String.valueOf(lat));
         if (server != null)
@@ -85,18 +129,52 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.up:
-                lat += step;
+            case R.id.north:
+                lattime = 1;
+                lngtime = 0;
                 break;
-            case R.id.down:
-                lat -= step;
+            case R.id.northeast:
+                lattime = 0.707;
+                lngtime = 0.707;
                 break;
-            case R.id.left:
-                lng -= step;
+            case R.id.northwest:
+                lattime = 0.707;
+                lngtime = -0.707;
                 break;
-            case R.id.right:
-                lng += step;
+            case R.id.south:
+                lattime = -1;
+                lngtime = 0;
                 break;
+            case R.id.southeast:
+                lattime = -0.707;
+                lngtime = 0.707;
+                break;
+            case R.id.southwest:
+                lattime = -0.707;
+                lngtime = -0.707;
+                break;
+            case R.id.east:
+                lattime = 0;
+                lngtime = 1;
+                break;
+            case R.id.west:
+                lattime = 0;
+                lngtime = -1;
+                break;
+
+
+            case R.id.location:
+                lattime = 0;
+                lngtime = 0;
+                break;
+
+            case R.id.speed_control_drive:
+                step = step_drive;
+                break;
+            case R.id.speed_control_walk:
+                step = step_walk;
+                break;
+
         }
         location.setText(lat+","+lng);
     }
