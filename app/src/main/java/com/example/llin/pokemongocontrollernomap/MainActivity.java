@@ -52,8 +52,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onResume();
         sharedPrefPersistence = new SharedPrefPersistence(MainActivity.this);
         if(sharedPrefPersistence.read("lng") == null){
-            lng = -79.058134999992;
-            lat = 43.173900000028;
+            lng = -79.063919;
+            lat = 43.256777;
         }else {
             lng = Double.parseDouble(sharedPrefPersistence.read("lng"));
             lat = Double.parseDouble(sharedPrefPersistence.read("lat"));
