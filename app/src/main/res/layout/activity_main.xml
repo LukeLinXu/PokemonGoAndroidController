@@ -26,36 +26,37 @@
 
         <Button
             android:id="@+id/up"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="up"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:text="North"
             android:layout_above="@id/location"
             android:layout_centerHorizontal="true"
+
             />
 
         <Button
             android:id="@+id/down"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="down"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:text="South"
             android:layout_below="@id/location"
             android:layout_centerHorizontal="true"
             />
 
         <Button
             android:id="@+id/left"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="left"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:text="West"
             android:layout_toLeftOf="@id/location"
             android:layout_centerVertical="true"
             />
 
         <Button
             android:id="@+id/right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="right"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:text="East"
             android:layout_toRightOf="@id/location"
             android:layout_centerVertical="true"
             />

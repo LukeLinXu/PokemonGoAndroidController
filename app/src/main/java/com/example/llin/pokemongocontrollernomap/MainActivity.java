@@ -27,9 +27,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button down;
     private Button left;
     private Button right;
-    private double lng = -79.3802176;
-    private double lat = 43.6388539;
+    private double lng;
+    private double lat;
     private static final double step = 0.00001;
+    private SharedPrefPersistence sharedPrefPersistence;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,7 +50,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
-
+        sharedPrefPersistence = new SharedPrefPersistence(MainActivity.this);
+        if(sharedPrefPersistence.read("lng") == null){
+            lng = -79.058134999992;
+            lat = 43.173900000028;
+        }else {
+            lng = Double.parseDouble(sharedPrefPersistence.read("lng"));
+            lat = Double.parseDouble(sharedPrefPersistence.read("lat"));
+        }
         TextView textIpaddr = (TextView) findViewById(R.id.ipaddr);
         WifiManager wifiManager = (WifiManager) getSystemService(WIFI_SERVICE);
         int ipAddress = wifiManager.getConnectionInfo().getIpAddress();
@@ -68,6 +76,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onPause() {
         super.onPause();
+        sharedPrefPersistence.save("lng", String.valueOf(lng));
+        sharedPrefPersistence.save("lat", String.valueOf(lat));
         if (server != null)
             server.stop();
     }
